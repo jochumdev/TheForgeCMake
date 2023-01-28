@@ -118,7 +118,12 @@ char(*array_counter(const T(&)[N]))[N];
 	#ifdef __clang__
 	#define COMPILE_ASSERT(exp) _Static_assert(exp, #exp)
 	#else
-	#define COMPILE_ASSERT(exp) static_assert(exp, #exp)
+	// GCC
+	#define STATIC_ASSERT(COND,MSG) typedef char static_assertion_##MSG[(!!(COND))*2-1]
+	// token pasting madness:
+	#define COMPILE_ASSERT3(X,L) STATIC_ASSERT(X,static_assertion_at_line_##L)
+	#define COMPILE_ASSERT2(X,L) COMPILE_ASSERT3(X,L)
+	#define COMPILE_ASSERT(X)    COMPILE_ASSERT2(X,__LINE__)
 	#endif
 
 	#if defined(__i386__)
@@ -267,14 +272,6 @@ COMPILE_ASSERT(sizeof(ssize_t) == sizeof(int64_t));
 //                         This define allows to hide Renderer functionality to the Game, so that if someone tries to use it it'll get a linker error.
 // #define FORGE_API
 // #define FORGE_RENDERER_API
-
-#ifndef FORGE_DEBUG
-#if defined(DEBUG) || defined(_DEBUG) || defined(AUTOMATED_TESTING)
-#define FORGE_DEBUG
-#endif
-#endif
-
-// #define ENABLE_FORGE_STACKTRACE_DUMP
 
 #ifdef AUTOMATED_TESTING
 #if defined(NX64) || (defined(_WINDOWS) && defined(_M_X64)) || defined(ORBIS)

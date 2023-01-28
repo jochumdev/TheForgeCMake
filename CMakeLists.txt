@@ -1,5 +1,6 @@
 # We need at least 3.12 for list(JOIN....), add_compile_definitions
-cmake_minimum_required(VERSION 3.12)
+# 3.15 for CMAKE_CXX_COMPILER_FRONTEND_VARIANT
+cmake_minimum_required(VERSION 3.15)
 
 project(TheForgeCMake)
 
@@ -13,12 +14,34 @@ endif ()
 set(CXX_STANDARD 14)
 set(CXX_STANDARD_REQUIRED ON)
 set(CXX_EXTENSIONS ON)
+set(CMAKE_C_STANDARD 99)
 
-SET(C_FLAGS "${CMAKE_C_FLAGS} -O2")
-SET(CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -Wno-comment -Wno-unknown-pragmas -march=native -msse4.1")
+if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    if (CMAKE_CXX_COMPILER_FRONTEND_VARIANT STREQUAL "MSVC")
+        # using clang with clang-cl front end
+    elseif (CMAKE_CXX_COMPILER_FRONTEND_VARIANT STREQUAL "GNU")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-comment -Wno-unknown-pragmas -march=native -msse4.1")
 
-# SET(C_FLAGS "${C_FLAGS} -Wall -Werror")
-# set(CXX_FLAGS "${CXX_FLAGS} -Wall -Werror")
+        # TODO(jochumdev): I'm not sure why compile fails with these, works on UbuntuCodeLite.
+        # set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror")
+        # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror")
+    
+        if (${CMAKE_BUILD_TYPE} MATCHES "Release")
+            set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2")
+            set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
+        endif ()
+    endif()
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-comment -Wno-unknown-pragmas -march=native -msse4.1")
+    if (${CMAKE_BUILD_TYPE} MATCHES "Release")
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
+    endif ()
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Intel")
+  # using Intel C++
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+  # using Visual Studio C++
+endif()
 
 set(FORGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../TheForge" CACHE STRING "The Forge source directory")
 set(FORGE_OS "" CACHE STRING "The Forge OS (for cross compilation)")
@@ -164,9 +187,12 @@ endif ()
 if (${FORGE_ENABLE_PROFILER} MATCHES ON)
     add_compile_definitions("ENABLE_PROFILER=")
 endif ()
+if (${CMAKE_BUILD_TYPE} MATCHES "Debug")
+    add_compile_definitions("DEBUG=" "FORGE_DEBUG=" "_DEBUG=")
+endif ()
 
 # Dumb options
-set(_FORGE_DUMB_VARS "FORGE_OS;FORGE_RENDERER;FORGE_SOURCE_DIR;FORGE_DEFAULT_LOG_LEVEL;FORGE_ENABLE_API;FORGE_ENABLE_RENDERER_API;FORGE_ENABLE_MEMORY_TRACKING;FORGE_ENABLE_SCRIPTING;FORGE_ENABLE_UI;FORGE_ENABLE_FONTS;FORGE_ENABLE_ZIP_FILESYSTEM;FORGE_ENABLE_SCREENSHOT;FORGE_ENABLE_PROFILER;FORGE_BUILD_EXAMPLES")
+set(_FORGE_DUMB_VARS "CMAKE_C_FLAGS;CMAKE_CXX_FLAGS;FORGE_OS;FORGE_RENDERER;FORGE_SOURCE_DIR;FORGE_DEFAULT_LOG_LEVEL;FORGE_ENABLE_API;FORGE_ENABLE_RENDERER_API;FORGE_ENABLE_MEMORY_TRACKING;FORGE_ENABLE_SCRIPTING;FORGE_ENABLE_UI;FORGE_ENABLE_FONTS;FORGE_ENABLE_ZIP_FILESYSTEM;FORGE_ENABLE_SCREENSHOT;FORGE_ENABLE_PROFILER;FORGE_BUILD_EXAMPLES")
 
 message(STATUS "The following options have been set:")
 foreach(_FDV ${_FORGE_DUMB_VARS})
