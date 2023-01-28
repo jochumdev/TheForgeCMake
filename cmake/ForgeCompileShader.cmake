@@ -1,13 +1,13 @@
 #
 # Setup
 #
-# set (FORGE_SOURCE_DIR "" CACHE STRING "The Forge source directory")
-# set (FORGE_RENDERER "all" CACHE STRING "language, defaults to all")
+set (FORGE_SOURCE_DIR "" CACHE STRING "The Forge source directory")
+set (FORGE_RENDERER "all" CACHE STRING "language, defaults to all")
 option (FCS_VERBOSE "Verbose output")
 option (FCS_INCREMENTAL "Only build on change")
-# set (FCS_DESTINATION "" CACHE STRING "Destination directory")
-# set (FCS_BINARYDESTINATION "" CACHE STRING "Binary destination directory")
-# set (FCS_SHADERS "" CACHE STRING "List of shaders, semicolon seperated")
+set (FCS_DESTINATION "" CACHE STRING "Destination directory")
+set (FCS_BINARYDESTINATION "" CACHE STRING "Binary destination directory")
+set (FCS_SHADERS "" CACHE STRING "List of shaders, semicolon seperated")
 
 #
 # Options

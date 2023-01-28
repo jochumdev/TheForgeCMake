@@ -1,12 +1,12 @@
 function (forge_build_example_unit_test)
-    set(options)
+    set(options ART_DOWNLOAD)
     set(oneValueArgs NAME)
     set(multiValueArgs FILES LIBS COPY_FILES COPY_DIRS SHADERS SCRIPTS)
     cmake_parse_arguments(_EXAMPLE "${options}" "${oneValueArgs}"
                         "${multiValueArgs}" ${ARGN})
 
     # Dumb options
-    set(_DUMB_VARS "FILES;LIBS;COPY_FILES;COPY_DIRS;SHADERS;SCRIPTS")
+    set(_DUMB_VARS "ART_DOWNLOAD;FILES;LIBS;COPY_FILES;COPY_DIRS;SHADERS;SCRIPTS")
 
     message(STATUS "Will build examples \"${_EXAMPLE_NAME}\":")
     foreach(_FDV ${_DUMB_VARS})
@@ -24,6 +24,18 @@ function (forge_build_example_unit_test)
     endforeach ()
 
     add_executable(${PROJECT_NAME} ${_FILES})
+    if (_EXAMPLE_ART_DOWNLOAD AND NOT EXISTS "${FORGE_SOURCE_DIR}/Art.zip")
+        message(STATUS "Downloading Art.zip, this can take a LONG time.")
+        # Replace with something else
+        add_custom_command(
+            TARGET ${PROJECT_NAME} PRE_BUILD
+            COMMAND wget -O Art.zip http://www.conffx.com/Art.zip
+            COMMAND 7z x Art.zip
+            WORKING_DIRECTORY ${FORGE_SOURCE_DIR}
+            VERBATIM USES_TERMINAL
+        )
+    endif()
+
     target_link_libraries(${PROJECT_NAME} ${_EXAMPLE_LIBS})
 
     # GPUCfg

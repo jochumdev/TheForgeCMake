@@ -10,14 +10,14 @@ While this can serve as out-of-tree CMake builder I wish to have this included i
 
 ## Inspiration
 
-I stared this as a fork of [JonaGoldsmith/The-Forge-CMake](https://github.com/JonahGoldsmith/The-Forge-CMake.git) you will still find pieces from him here, he forked
+I started this as a fork of [JonaGoldsmith/The-Forge-CMake](https://github.com/JonahGoldsmith/The-Forge-CMake.git) you will still find pieces from him here, he forked
 [VoidAnchor/TheForgeTheCmake](https://github.com/VoidAnchor/TheForgeTheCmake).
 
 As I extended the above CMake project I started to switch everything to the same Layout as the "UbuntuCodeLite" project's inside TheForge have.
 
 ## Authors
 
-- René Jochum @jochumdev rene@jochum.dev
+- [René Jochum](https://github.com/jochumdev)
 
 ## License
 

@@ -194,17 +194,27 @@ set(FORGE_EXAMPLES_DIR ${FORGE_SOURCE_DIR}/Examples_3)
 #
 # Shader compiler script
 #
-set(FORGE_SHADERCOMPILER_SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/ForgeCompileShader.cmake")
+set(FORGE_SHADERCOMPILER_SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/cmake/ForgeCompileShader.cmake")
 
+#
+# OS/Renderer dependencies.
+#
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Common_3/Application/ThirdParty/OpenSource/gainput)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Common_3/Utilities/ThirdParty/OpenSource/EASTL)
-
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Common_3/Resources/AnimationSystem/ThirdParty/OpenSource/ozz-animation)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Common_3/Utilities/ThirdParty/OpenSource/SpirVTools)
 
 include(cmake/OS.cmake)
 include(cmake/Renderer.cmake)
 
+#
+# Executable dependencies.
+#
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Common_3/Resources/AnimationSystem/ThirdParty/OpenSource/ozz-animation)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Common_3/Utilities/ThirdParty/OpenSource/SpirVTools)
+
+
+#
+# Examples
+#
 if (${FORGE_BUILD_EXAMPLES} MATCHES ON)
     add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Examples_3)
 endif ()
