@@ -1,8 +1,12 @@
 # The Forge CMake Files
 
-This project contains all CMake files required to build The Forge and it's libraries out-of-tree.
+This project contains all CMake files required to build [The Forge](https://github.com/ConfettiFX/The-Forge) and it's libraries out-of-tree.
 
 It has been fully tested on Linux, Windows tests will follow any other platforms by the lack of them I can't test.
+
+## Usage
+
+See [TheForgeCMakeTemplate](https://github.com/jochumdev/TheForgeCMakeTemplate).
 
 ## Future plans
 

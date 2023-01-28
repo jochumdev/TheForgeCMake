@@ -41,7 +41,7 @@ option(FORGE_ENABLE_MESHOPTIMIZER "Enable meshoptimizer" ON)
 set(FORGE_DEFAULT_LOG_LEVEL "eALL" CACHE STRING "Default Log level")
 
 
-option(FORGE_BUILD_EXAMPLES "Build TheForge examples" ON)
+option(FORGE_BUILD_EXAMPLES "Build TheForge examples" OFF)
 
 # Do some OS checks, and setup accordingly.
 set(FORGE_OS_APPLE OFF)
