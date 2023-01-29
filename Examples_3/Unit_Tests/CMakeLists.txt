@@ -117,7 +117,7 @@ function (forge_build_example_unit_test)
         TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} 
             -DFORGE_SOURCE_DIR="${FORGE_SOURCE_DIR}"
-            -DFORGE_RENDERER="${FORGE_RENDERER}"
+            -DFORGE_RENDERERS="${FORGE_RENDERERS}"
             -DFCS_VERBOSE=ON
             -DFCS_INCREMENTAL=ON
             -DFCS_DESTINATION="${CMAKE_CURRENT_BINARY_DIR}/Shaders"

@@ -45,7 +45,7 @@ endif()
 
 set(FORGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../TheForge" CACHE STRING "The Forge source directory")
 set(FORGE_OS "" CACHE STRING "The Forge OS (for cross compilation)")
-set(FORGE_RENDERER "" CACHE STRING "The Forge RENDERER (for cross compilation)")
+set(FORGE_RENDERERS "" CACHE STRING "The Forge RENDERER (for cross compilation)")
 
 option(FORGE_ENABLE_API "Enable Forge API" ON)
 option(FORGE_ENABLE_RENDERER_API "Enable Forge Renderer" ON)
@@ -66,19 +66,12 @@ set(FORGE_DEFAULT_LOG_LEVEL "eALL" CACHE STRING "Default Log level")
 
 option(FORGE_BUILD_EXAMPLES "Build TheForge examples" OFF)
 
+#
 # Do some OS checks, and setup accordingly.
+#
 set(FORGE_OS_APPLE OFF)
 set(FORGE_OS_LINUX OFF)
 set(FORGE_OS_WINDOWS OFF)
-
-# On macOS, we always set FORGE_RENDERER_METAL support to on.
-set(FORGE_RENDERER_METAL OFF)
-set(FORGE_RENDERER_DX12 OFF)
-set(FORGE_RENDERER_DX11 OFF)
-set(FORGE_RENDERER_VULKAN OFF)
-
-# option(FORGE_ENABLE_ASSIMP OFF)
-# option(FORGE_ENABLE_OZZ OFF)
 
 if ("${FORGE_OS}" STREQUAL "")
     set(FORGE_OS ${CMAKE_SYSTEM_NAME})
@@ -107,38 +100,48 @@ if ("${FORGE_OS}" MATCHES "Windows")
     set(FORGE_OS_WINDOWS ON)
 endif()
 
+#
+# Renderer
+#
+set(FORGE_RENDERER_METAL OFF)
+set(FORGE_RENDERER_DX12 OFF)
+set(FORGE_RENDERER_DX11 OFF)
+set(FORGE_RENDERER_VULKAN OFF)
+
 if ("${FORGE_RENDERER}" STREQUAL "")
     if (${FORGE_OS_LINUX} MATCHES ON)
-        set(FORGE_RENDERER "VULKAN")
+        set(FORGE_RENDERERS "VULKAN")
     elseif (${FORGE_OS_APPLE} MATCHES ON)
-        set(FORGE_RENDERER "METAL")
+        set(FORGE_RENDERERS "METAL")
     elseif (${FROGE_OS_WINDOWS} MATCHES ON)
-        set(FORGE_RENDERER "DX12")
+        set(FORGE_RENDERERS "VULKAN;DX11;DX12")
     endif()
 endif()
 
 
-if (${FORGE_RENDERER} MATCHES "VULKAN")
+if ("VULKAN" IN_LIST FORGE_RENDERERS)
     set(FORGE_RENDERER_VULKAN ON)
-    set(FORGE_RENDERER_METAL OFF)
-    set(FORGE_RENDERER_DX12 OFF)
-    set(FORGE_RENDERER_DX11 OFF)
-elseif (${FORGE_RENDERER} MATCHES "METAL")
+else ()
     set(FORGE_RENDERER_VULKAN OFF)
+endif ()
+
+if ("METAL" IN_LIST FORGE_RENDERERS)
     set(FORGE_RENDERER_METAL ON)
-    set(FORGE_RENDERER_DX12 OFF)
-    set(FORGE_RENDERER_DX11 OFF)
-elseif (${FORGE_RENDERER} MATCHES "DX12")
-    set(FORGE_RENDERER_VULKAN OFF)
+else ()
     set(FORGE_RENDERER_METAL OFF)
+endif ()
+
+if ("DX12" IN_LIST FORGE_RENDERERS)
     set(FORGE_RENDERER_DX12 ON)
-    set(FORGE_RENDERER_DX11 OFF)
-elseif (${FORGE_RENDERER} MATCHES "DX11")
-    set(FORGE_RENDERER_VULKAN OFF)
-    set(FORGE_RENDERER_METAL OFF)
+else ()
     set(FORGE_RENDERER_DX12 OFF)
+endif ()
+
+if ("DX11" IN_LIST FORGE_RENDERERS)
     set(FORGE_RENDERER_DX11 ON)
-endif()
+else ()
+    set(FORGE_RENDERER_DX11 OFF)
+endif ()
 
 #
 # Option validation
