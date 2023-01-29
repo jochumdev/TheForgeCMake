@@ -1,4 +1,8 @@
 #
+# Script to compile shaders via CMake.
+#
+
+#
 # Setup
 #
 set (FORGE_SOURCE_DIR "" CACHE STRING "The Forge source directory")

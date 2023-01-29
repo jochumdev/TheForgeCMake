@@ -1,3 +1,9 @@
+# #pragma once
+include_guard(GLOBAL)
+
+include("${CMAKE_CURRENT_LIST_DIR}/TF_Base.cmake")
+include("${CMAKE_CURRENT_LIST_DIR}/TF_OS.cmake")
+
 set(FORGE_RENDERER_INCLUDE_DIRS ${FORGE_RENDERER_INCLUDE_DIRS} "${FORGE_COMMON_DIR}")
 
 set(FORGE_RENDERER_COMMON_FILES
@@ -89,8 +95,6 @@ if(${FORGE_RENDERER_VULKAN} MATCHES ON)
     else()
         message("Vulkan SDK not found.  Please make sure it is installed and added to your path.")
     endif()
-
-    message("VULKAN...")
 
     set(FORGE_RENDERER_LIBRARIES ${FORGE_RENDERER_LIBRARIES} SpirVTools)
 

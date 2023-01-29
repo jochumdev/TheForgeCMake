@@ -1,3 +1,9 @@
+# We need at least 3.12 for list(JOIN....), add_compile_definitions
+# 3.15 for CMAKE_CXX_COMPILER_FRONTEND_VARIANT
+cmake_minimum_required(VERSION 3.15)
+
+include("${CMAKE_CURRENT_SOURCE_DIR}/../example.cmake")
+
 add_library(19a_CodeHotReload_Game "${FORGE_EXAMPLES_DIR}/Unit_Tests/src/19_CodeHotReload/19_CodeHotReload_Game.cpp")
 target_link_libraries(19a_CodeHotReload_Game PRIVATE EASTL Threads::Threads)
 
