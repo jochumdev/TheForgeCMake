@@ -222,15 +222,6 @@ set(FORGE_MIDDLEWARE_DIR ${FORGE_SOURCE_DIR}/Middleware_3)
 set(FORGE_SHADERCOMPILER_SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/cmake/ForgeCompileShader.cmake")
 
 #
-# OS/Renderer dependencies.
-#
-set(THREADS_PREFER_PTHREAD_FLAG ON)
-find_package(Threads REQUIRED)
-
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Common_3/Application/ThirdParty/OpenSource/gainput)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Common_3/Utilities/ThirdParty/OpenSource/EASTL)
-
-#
 # theForgeOS / theForgeRenderer
 #
 include(cmake/OS.cmake)

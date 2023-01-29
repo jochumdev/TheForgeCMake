@@ -1,7 +1,7 @@
 forge_build_example_unit_test(
     NAME 06_MaterialPlayground
     FILES 06_MaterialPlayground.cpp
-    LIBS TheForgeOS TheForgeRenderer gainput EASTL OZZAnimationRuntime
+    LIBS TheForgeOS TheForgeRenderer OZZAnimationRuntime
     SHADERS ${FORGE_UI_SHADERS} ${FORGE_TEXT_SHADERS}
 
     ART_DOWNLOAD ON

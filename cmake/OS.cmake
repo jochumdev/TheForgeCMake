@@ -299,7 +299,22 @@ elseif (${FORGE_OS_LINUX} MATCHES ON)
     set(FORGE_OS_FILES ${FORGE_OS_FILES} ${FORGE_OX_LINUX_FILES})
 endif ()
 
+#
+# dependencies.
+#
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
+
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Common_3/Application/ThirdParty/OpenSource/gainput)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Common_3/Utilities/ThirdParty/OpenSource/EASTL)
+
+#
+# The library
+#
 add_library(TheForgeOS STATIC ${FORGE_OS_FILES})
 
 target_include_directories(TheForgeOS SYSTEM PRIVATE ${FORGE_OS_INCLUDE_DIRS})
-target_link_libraries(TheForgeOS ${FORGE_OS_LIBRARIES})
+target_link_libraries(TheForgeOS 
+        PRIVATE ${FORGE_OS_LIBRARIES}
+        PUBLIC EASTL gainput Threads::Threads
+)

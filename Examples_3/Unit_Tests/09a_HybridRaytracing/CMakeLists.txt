@@ -1,7 +1,7 @@
 forge_build_example_unit_test(
     NAME 09a_HybridRaytracing
     FILES 09a_HybridRaytracing.cpp
-    LIBS TheForgeOS TheForgeRenderer gainput EASTL
+    LIBS TheForgeOS TheForgeRenderer
     SHADERS ${FORGE_UI_SHADERS} ${FORGE_TEXT_SHADERS}
 
     ART_DOWNLOAD ON

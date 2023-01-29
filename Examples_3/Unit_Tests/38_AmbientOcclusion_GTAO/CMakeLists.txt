@@ -1,7 +1,7 @@
 forge_build_example_unit_test(
     NAME 38_AmbientOcclusion_GTAO
     FILES 38_AmbientOcclusion_GTAO.cpp Geometry.cpp
-    LIBS TheForgeOS TheForgeRenderer gainput EASTL
+    LIBS TheForgeOS TheForgeRenderer
     SHADERS ${FORGE_UI_SHADERS} ${FORGE_TEXT_SHADERS}
 
     ART_DOWNLOAD ON
