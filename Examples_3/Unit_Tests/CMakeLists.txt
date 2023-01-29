@@ -1,3 +1,5 @@
+set(FORGE_EXAMPLES_DIR ${FORGE_SOURCE_DIR}/Examples_3)
+
 function (forge_build_example_unit_test)
     set(options ART_DOWNLOAD)
     set(oneValueArgs NAME)
