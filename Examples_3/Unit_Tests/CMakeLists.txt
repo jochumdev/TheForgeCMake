@@ -38,7 +38,7 @@ function (forge_build_example_unit_test)
         )
     endif()
 
-    target_link_libraries(${PROJECT_NAME} ${_EXAMPLE_LIBS})
+    target_link_libraries(${PROJECT_NAME} PRIVATE ${_EXAMPLE_LIBS} PRIVATE Threads::Threads)
 
     # GPUCfg
     add_custom_command(

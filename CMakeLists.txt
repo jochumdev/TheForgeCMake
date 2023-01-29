@@ -13,30 +13,35 @@ endif ()
 
 set(CXX_STANDARD 14)
 set(CXX_STANDARD_REQUIRED ON)
-set(CXX_EXTENSIONS ON)
+set(CXX_EXTENSIONS OFF)
 set(CMAKE_C_STANDARD 99)
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     if (CMAKE_CXX_COMPILER_FRONTEND_VARIANT STREQUAL "MSVC")
         # using clang with clang-cl front end
     elseif (CMAKE_CXX_COMPILER_FRONTEND_VARIANT STREQUAL "GNU")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-comment -Wno-unknown-pragmas -march=native -msse4.1")
-
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-comment")
+        set(CMAKE_C_FLAGS_DEBUG "-g")
+        set(CMAKE_C_FLAGS_RELEASE "-march=native -msse4.1 -O2")
+        set(CMAKE_CXX_FLAGS "-std=gnu++14 ${CMAKE_CXX_FLAGS} -Wno-comment -Wno-unknown-pragmas")
+        set(CMAKE_CXX_FLAGS_DEBUG "-g")
+        set(CMAKE_CXX_FLAGS_RELEASE "-march=native -msse4.1 -O2")
+    
         # TODO(jochumdev): I'm not sure why compile fails with these, works on UbuntuCodeLite.
         # set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror")
-        # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror")
-    
-        if (${CMAKE_BUILD_TYPE} MATCHES "Release")
-            set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2")
-            set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
-        endif ()
+        # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror")    
     endif()
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-comment -Wno-unknown-pragmas -march=native -msse4.1")
-    if (${CMAKE_BUILD_TYPE} MATCHES "Release")
-        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
-    endif ()
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-comment")
+    set(CMAKE_C_FLAGS_DEBUG "-g")
+    set(CMAKE_C_FLAGS_RELEASE "-march=native -msse4.1 -O2")
+    set(CMAKE_CXX_FLAGS "-std=gnu++14 ${CMAKE_CXX_FLAGS} -Wno-comment -Wno-unknown-pragmas")
+    set(CMAKE_CXX_FLAGS_DEBUG "-g")
+    set(CMAKE_CXX_FLAGS_RELEASE "-march=native -msse4.1 -O2")
+
+    # TODO(jochumdev): I'm not sure why compile fails with these, works on UbuntuCodeLite.
+    # set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror")
+    # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror")
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Intel")
   # using Intel C++
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
@@ -225,9 +230,15 @@ set(FORGE_SHADERCOMPILER_SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/cmake/ForgeCompileS
 #
 # OS/Renderer dependencies.
 #
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
+
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Common_3/Application/ThirdParty/OpenSource/gainput)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Common_3/Utilities/ThirdParty/OpenSource/EASTL)
 
+#
+# theForgeOS / theForgeRenderer
+#
 include(cmake/OS.cmake)
 include(cmake/Renderer.cmake)
 
