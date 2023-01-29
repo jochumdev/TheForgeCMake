@@ -12,3 +12,7 @@ forge_build_example_unit_test(
 
     COPY_FILES "${FORGE_EXAMPLES_DIR}/Unit_Tests/UnitTestResources/Textures/sprites.dds|Textures/"
 )
+
+if (CMAKE_BUILD_TYPE MATCHES "Release")
+    target_compile_definitions(17_EntityComponentSystem PUBLIC "FLECS_NDEBUG=")
+endif ()

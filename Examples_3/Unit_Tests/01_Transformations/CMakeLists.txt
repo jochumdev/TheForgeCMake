@@ -11,3 +11,5 @@ forge_build_example_unit_test(
     LIBS TheForgeOS TheForgeRenderer
     SHADERS ${FORGE_UI_SHADERS} ${FORGE_TEXT_SHADERS}
 )
+
+# target_compile_definitions(01_Transformations PUBLIC "NOESIS_TEST=")

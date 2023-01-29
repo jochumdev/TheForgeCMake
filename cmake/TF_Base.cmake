@@ -75,11 +75,11 @@ set(FORGE_RENDERER_VULKAN OFF)
 
 if ("${FORGE_RENDERER}" STREQUAL "")
     if (${FORGE_OS_LINUX} MATCHES ON)
-        set(FORGE_RENDERERS "VULKAN")
+        set(FORGE_RENDERERS "VULKAN" CACHE INTERNAL "")
     elseif (${FORGE_OS_APPLE} MATCHES ON)
-        set(FORGE_RENDERERS "METAL")
+        set(FORGE_RENDERERS "METAL" CACHE INTERNAL "")
     elseif (${FROGE_OS_WINDOWS} MATCHES ON)
-        set(FORGE_RENDERERS "VULKAN;DX11;DX12")
+        set(FORGE_RENDERERS "VULKAN;DX11;DX12" CACHE INTERNAL "")
     endif()
 endif()
 
@@ -171,10 +171,10 @@ set(CXX_EXTENSIONS OFF)
 
 if ((CMAKE_CXX_COMPILER_ID STREQUAL "Clang" OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU") AND NOT CMAKE_CXX_COMPILER_FRONTEND_VARIANT STREQUAL "MSVC")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-comment -Wall -Wextra")
-    set(CMAKE_C_FLAGS_DEBUG "-g")
+    set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} -g")
     set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS_RELEASE} -O3")
     set(CMAKE_CXX_FLAGS "-std=gnu++14 ${CMAKE_CXX_FLAGS} -Wno-comment -Wno-unknown-pragmas -Wall -Wextra")
-    set(CMAKE_CXX_FLAGS_DEBUG "-g")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g")
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
 
     # See: https://github.com/jochumdev/TheForgeCMake/issues/7
@@ -216,7 +216,7 @@ set(FORGE_MIDDLEWARE_DIR ${FORGE_SOURCE_DIR}/Middleware_3)
 #
 # Shader compiler script
 #
-set(FORGE_SHADERCOMPILER_SCRIPT "${CMAKE_CURRENT_LIST_DIR}/TF_CompileShader.cmake")
+set(FORGE_SHADERCOMPILER_SCRIPT "${CMAKE_CURRENT_LIST_DIR}/TF_CompileShader.cmake" CACHE INTERNAL "")
 
 #
 # Executable dependencies.

@@ -316,8 +316,11 @@ add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../Common_3/Utilities/ThirdParty/Open
 #
 add_library(TheForgeOS STATIC ${FORGE_OS_FILES})
 
-target_include_directories(TheForgeOS SYSTEM PRIVATE ${FORGE_OS_INCLUDE_DIRS})
+target_include_directories(TheForgeOS 
+        SYSTEM PRIVATE ${FORGE_OS_INCLUDE_DIRS}
+        PUBLIC ${FORGE_SOURCE_DIR}/../
+)
 target_link_libraries(TheForgeOS 
-        PRIVATE ${FORGE_OS_LIBRARIES}
-        PUBLIC OZZAnimationBase EASTL gainput Threads::Threads
+        PRIVATE ${FORGE_OS_LIBRARIES} OZZAnimationBase
+        PUBLIC EASTL gainput Threads::Threads
 )
